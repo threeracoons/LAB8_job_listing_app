@@ -1,0 +1,37 @@
+<!-- JOBS/templates/JOBS/job_list.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Job List</title>
+    <link rel="stylesheet" type="text/css" href="/static/JOBS/styles.css">
+</head>
+<body>
+    <h1>Job List</h1>
+    <div>
+        <h2>Add Job</h2>
+        <form method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit">Add Job</button>
+        </form>
+    </div>
+    <hr>
+    <h2>Jobs</h2>
+    {% for job in jobs %}
+        <div>
+            <h3>{{ job.title }}</h3>
+            <p>{{ job.description }}</p>
+            {% if job.image %}
+                <img src="{{ job.image.url }}" alt="{{ job.title }}">
+            {% else %}
+                <p>No image available</p>
+            {% endif %}
+        </div>
+    {% empty %}
+        <p>No jobs available</p>
+    {% endfor %}
+</body>
+</html>
